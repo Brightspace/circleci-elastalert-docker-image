@@ -1,0 +1,23 @@
+jobs:
+  build:
+
+    branches:
+      only:
+        - master
+
+    environment:
+      - DOCKER_IMAGE_NAME: littlefoot/circleci-elastalert:0.1.28
+
+    machine:
+      enabled: true
+
+    steps:
+      - checkout
+
+      - run:
+         name: "Docker Build"
+         command: docker build -t $DOCKER_IMAGE_NAME .
+
+      - deploy:
+         name: "Docker Push"
+         command: .circleci/deploy.sh
