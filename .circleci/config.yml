@@ -16,4 +16,4 @@ jobs:
     steps:
       - checkout
       - run: docker build -t $DOCKER_IMAGE_NAME .
-      - run: .circleci/deploy.sh
+      - deploy: .circleci/deploy.sh
