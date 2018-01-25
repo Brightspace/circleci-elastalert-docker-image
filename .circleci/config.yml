@@ -12,8 +12,13 @@ jobs:
     machine:
       enabled: true
     environment:
-      - DOCKER_IMAGE_NAME: littlefoot/circleci-elastalert:unstable
+      - DOCKER_IMAGE_NAME: littlefoot/circleci-elastalert:0.1.28
     steps:
       - checkout
-      - run: docker build -t $DOCKER_IMAGE_NAME .
-      - deploy: .circleci/deploy.sh
+      - run:
+         name: "Docker Build"
+         command: docker build -t $DOCKER_IMAGE_NAME .
+
+      - deploy:
+         name: "Docker Push"
+         command: .circleci/deploy.sh
