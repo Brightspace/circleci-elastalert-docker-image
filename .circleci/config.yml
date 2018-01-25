@@ -1,20 +1,19 @@
-version: 2
-
-workflows:
-  version: 2
-  development:
-    jobs:
-      - build
-
 jobs:
-
   build:
-    machine:
-      enabled: true
+
+    branches:
+      only:
+        - master
+
     environment:
       - DOCKER_IMAGE_NAME: littlefoot/circleci-elastalert:0.1.28
+
+    machine:
+      enabled: true
+
     steps:
       - checkout
+
       - run:
          name: "Docker Build"
          command: docker build -t $DOCKER_IMAGE_NAME .
