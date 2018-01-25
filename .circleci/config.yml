@@ -1,5 +1,13 @@
 version: 2
+
+workflows:
+  version: 2
+  development:
+    jobs:
+      - build
+
 jobs:
+
   build:
     machine:
       enabled: true
@@ -8,5 +16,4 @@ jobs:
     steps:
       - checkout
       - run: docker build -t $DOCKER_IMAGE_NAME .
-      - run: docker login --username $DOCKER_LOGIN --password $DOCKER_PASSWORD
-      - run: docker push $DOCKER_IMAGE_NAME
+      - run: .circleci/publish.sh
