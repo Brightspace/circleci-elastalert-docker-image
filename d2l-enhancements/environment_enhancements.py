@@ -7,7 +7,7 @@ class AppendDataCenter(BaseEnhancement):
 	def process(self, match):
 		if 'D2L_DATA_CENTER' in environ:
 			match['d2l_data_center'] = environ['D2L_DATA_CENTER']
-		else
+		else:
 			match['d2l_data_center'] = 'unknown'
 
 class ExcludeDevelopmentEnvironments(BaseEnhancement):
