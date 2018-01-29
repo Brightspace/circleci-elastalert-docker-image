@@ -7,4 +7,4 @@ class AppendDataCenter(BaseEnhancement):
 
 class ExcludeDevelopmentEnvironments(BaseEnhancement):
 	def process(self, match):
-		# do nothing
+		pass
