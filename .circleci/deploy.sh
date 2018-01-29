@@ -1,12 +1,12 @@
-#!/bin/sh
+#!/bin/bash
 set -eu
 
 docker login --username "$DOCKER_USERNAME" --password "$DOCKER_PASSWORD"
 
 if [ "$CIRCLE_BRANCH" == "master" ]; then
-    buildTag="build"
+	buildTag="build"
 else
-    buildTag="rc"
+	buildTag="rc"
 fi
 
 publishImageName="${DOCKER_IMAGE_NAME}-${buildTag}${CIRCLE_BUILD_NUM}"
