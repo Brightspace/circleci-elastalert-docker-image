@@ -1,4 +1,4 @@
-FROM circleci/python:2.7.13
+FROM circleci/python:2.7.15
 
 RUN sudo pip install --upgrade \
 	awscli \
