@@ -1,6 +1,6 @@
 FROM circleci/python:3.6.9
 
-ENV ELASTALERT_URL https://github.com/Brightspace/elastalert/archive/test_rule_load_yaml.zip
+ENV ELASTALERT_URL https://github.com/Brightspace/elastalert/archive/d2l-0.2.1.1.zip
 
 RUN sudo pip install --upgrade \
 	awscli \
@@ -15,4 +15,4 @@ RUN \
 	&& cd /opt/elastalert/ \
 	&& sudo python3 setup.py install
 
-ADD d2l-enhancements/ /usr/local/lib/python3.6/site-packages/d2l/
+ADD d2l-enhancements/ /usr/lib/python3.6/site-packages/d2l/
