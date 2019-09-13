@@ -1,6 +1,6 @@
 FROM circleci/python:3.6.9
 
-ENV ELASTALERT_URL https://github.com/Yelp/elastalert/archive/v0.2.1.zip
+ENV ELASTALERT_URL https://github.com/Brightspace/elastalert/archive/test_rule_load_yaml.zip
 
 RUN sudo pip install --upgrade \
 	awscli \
