@@ -15,4 +15,4 @@ RUN \
 	&& cd /opt/elastalert/ \
 	&& sudo python3 setup.py install
 
-ADD d2l-enhancements/ /usr/local/lib/python3.6/site-packages/elastalert/d2l/
+ADD d2l-enhancements/ /usr/local/lib/python3.6/site-packages/d2l/
