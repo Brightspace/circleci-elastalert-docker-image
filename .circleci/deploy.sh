@@ -3,7 +3,7 @@ set -eu
 
 docker login --username "$DOCKER_USERNAME" --password "$DOCKER_PASSWORD"
 
-if [ "$CIRCLE_BRANCH" == "master" ]; then
+if [ "$CIRCLE_BRANCH" == "0.1.39" ]; then
 	buildTag="build"
 else
 	buildTag="rc"
