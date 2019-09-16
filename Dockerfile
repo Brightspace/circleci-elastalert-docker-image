@@ -1,7 +1,18 @@
-FROM circleci/python:2.7.15
+FROM circleci/python:2.7.16
+
+ENV ELASTALERT_URL https://github.com/Yelp/elastalert/archive/v0.1.39.zip
 
 RUN sudo pip install --upgrade \
 	awscli \
-	elastalert==0.1.39
+	"setuptools>=11.3"
 
-ADD d2l-enhancements/ /usr/local/lib/python2.7/site-packages/elastalert/d2l/
+RUN \
+	wget -O /var/tmp/elastalert.zip $ELASTALERT_URL \
+	&& mkdir -p /opt/ \
+	&& sudo unzip /var/tmp/elastalert.zip -d /opt/ \
+	&& rm /var/tmp/elastalert.zip \
+	&& sudo mv /opt/elastalert-*/ /opt/elastalert/ \
+	&& cd /opt/elastalert/ \
+	&& sudo python setup.py install
+
+ADD d2l-enhancements/ /usr/local/lib/python2.7/site-packages/d2l/
