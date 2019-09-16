@@ -4,6 +4,7 @@ ENV ELASTALERT_URL https://github.com/Yelp/elastalert/archive/v0.1.39.zip
 
 RUN sudo pip install --upgrade \
 	awscli \
+	"elasticsearch<7" \
 	"setuptools>=11.3"
 
 RUN \
