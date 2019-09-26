@@ -1,6 +1,6 @@
 FROM circleci/python:2.7.16
 
-ENV ELASTALERT_URL https://github.com/Brightspace/elastalert/archive/d2l-0.1.39.4.zip
+ENV ELASTALERT_URL https://github.com/Brightspace/elastalert/archive/d2l-0.1.39.5.zip
 
 RUN sudo pip install --upgrade \
 	awscli \
