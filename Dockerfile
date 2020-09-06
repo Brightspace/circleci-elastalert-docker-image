@@ -12,9 +12,7 @@ RUN \
 	&& sudo unzip /var/tmp/elastalert.zip -d /var/tmp/ \
 	&& rm /var/tmp/elastalert.zip \
 	&& sudo mv /var/tmp/elastalert-*/ /var/tmp/elastalert/ \
-	&& cd /var/tmp/elastalert/ \
-	&& sudo python3 setup.py install \
-	&& cd ~ \
+	&& sudo python3 /var/tmp/elastalert/setup.py install \
 	&& sudo rm -fr /var/tmp/elastalert/
 
 ADD d2l-enhancements/ /usr/local/lib/python3.8/site-packages/d2l/
