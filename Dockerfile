@@ -9,11 +9,12 @@ RUN sudo pip install --upgrade \
 
 RUN \
 	wget -O /var/tmp/elastalert.zip $ELASTALERT_URL \
-	&& mkdir -p /opt/ \
-	&& sudo unzip /var/tmp/elastalert.zip -d /opt/ \
+	&& sudo unzip /var/tmp/elastalert.zip -d /var/tmp/ \
 	&& rm /var/tmp/elastalert.zip \
-	&& sudo mv /opt/elastalert-*/ /opt/elastalert/ \
-	&& cd /opt/elastalert \
-	&& sudo python3 setup.py install
+	&& sudo mv /var/tmp/elastalert-*/ /var/tmp/elastalert/ \
+	&& cd /var/tmp/elastalert \
+	&& sudo python3 setup.py install \
+	&& cd ~ \
+	&& sudo rm -fr /var/tmp/elastalert
 
 ADD d2l-enhancements/ /usr/local/lib/python3.8/site-packages/d2l/
