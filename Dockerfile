@@ -1,4 +1,4 @@
-FROM circleci/python:3.8.5
+FROM circleci/python:3.8.7
 
 ENV ELASTALERT_URL https://github.com/Brightspace/elastalert/archive/d2l-v0.2.4.1.zip
 ENV TZ UTC
@@ -13,6 +13,8 @@ RUN \
 	&& rm /var/tmp/elastalert.zip \
 	&& sudo mv /var/tmp/elastalert-*/ /var/tmp/elastalert/ \
 	&& cd /var/tmp/elastalert \
+	&& pip3 install \
+		cryptography==3.3.2 \
 	&& sudo python3 setup.py install \
 	&& cd ~ \
 	&& sudo rm -fr /var/tmp/elastalert
