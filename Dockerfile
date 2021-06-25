@@ -22,7 +22,8 @@ FROM python:3.9.5-slim-buster
 
 COPY --from=builder /tmp/elastalert/dist/*.tar.gz /tmp/elastalert/dist/
 
-RUN apt-get -y update && \
+RUN \
+	apt-get -y update && \
 	apt-get -y upgrade && \
 	apt-get -y install awscli && \
 	apt-get -y autoremove && \
