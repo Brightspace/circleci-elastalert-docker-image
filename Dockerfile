@@ -16,6 +16,7 @@ RUN \
 	pip install setuptools wheel && \
 	python setup.py sdist bdist_wheel
 
+# -----------------------------------------------------------------------------------------
 
 FROM python:3.9.5-slim-buster
 
