@@ -12,7 +12,6 @@ RUN \
 	mv /tmp/elastalert*/ /tmp/elastalert/
 
 RUN \
-	mkdir -p /opt/elastalert && \
 	cd /tmp/elastalert && \
 	pip install setuptools wheel && \
 	python setup.py sdist bdist_wheel
