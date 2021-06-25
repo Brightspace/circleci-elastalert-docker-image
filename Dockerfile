@@ -4,7 +4,9 @@ RUN \
 	apt-get -y update && \
 	apt-get -y install unzip
 
-ADD https://github.com/jertel/elastalert2/archive/refs/tags/2.1.1.zip /tmp/elastalert.zip
+ADD \
+	https://github.com/JeffAshton/elastalert2/archive/refs/tags/slack_channel_override.zip \
+	/tmp/elastalert.zip
 
 RUN \
 	unzip /tmp/elastalert.zip -d /tmp/ && \
