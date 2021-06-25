@@ -24,7 +24,7 @@ COPY --from=builder /tmp/elastalert/dist/*.tar.gz /tmp/elastalert/dist/
 
 RUN apt-get -y update && \
 	apt-get -y upgrade && \
-	apt-get -y install awscli curl jq && \
+	apt-get -y install awscli && \
 	apt-get -y autoremove && \
 	rm -rf /var/lib/apt/lists/* && \
 	pip install /tmp/elastalert/dist/*.tar.gz && \
