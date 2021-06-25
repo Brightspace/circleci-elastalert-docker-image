@@ -4,6 +4,7 @@ from setuptools import setup
 
 base_dir = os.path.dirname( __file__ )
 setup(
-	name='d2l',
-	setup_requires='setuptools'
+	name = 'd2l',
+	packages = [ 'd2l' ],
+	setup_requires = 'setuptools'
 )
