@@ -1,22 +1,49 @@
-FROM circleci/python:3.8.7
-
-ENV ELASTALERT_URL https://github.com/Brightspace/elastalert/archive/d2l-v0.2.4.1.zip
-ENV TZ UTC
-
-RUN sudo pip install --upgrade \
-	awscli \
-	setuptools
+FROM python:3.9.5-slim-buster as elastalert
 
 RUN \
-	wget -O /var/tmp/elastalert.zip $ELASTALERT_URL \
-	&& sudo unzip /var/tmp/elastalert.zip -d /var/tmp/ \
-	&& rm /var/tmp/elastalert.zip \
-	&& sudo mv /var/tmp/elastalert-*/ /var/tmp/elastalert/ \
-	&& cd /var/tmp/elastalert \
-	&& pip3 install \
-		cryptography==3.3.2 \
-	&& sudo python3 setup.py install \
-	&& cd ~ \
-	&& sudo rm -fr /var/tmp/elastalert
+	apt-get -y update && \
+	apt-get -y install unzip
 
-ADD d2l-enhancements/ /usr/local/lib/python3.8/site-packages/d2l/
+ADD \
+	https://github.com/jertel/elastalert2/archive/c4d7347c253c45bd84c219b85671989af639f3c5.zip \
+	/tmp/elastalert.zip
+
+RUN \
+	unzip /tmp/elastalert.zip -d /tmp/ && \
+	rm /tmp/elastalert.zip && \
+	mv /tmp/elastalert*/ /tmp/elastalert/
+
+RUN \
+	cd /tmp/elastalert && \
+	pip install setuptools wheel && \
+	python setup.py sdist bdist_wheel
+
+# -----------------------------------------------------------------------------------------
+
+FROM python:3.9.5-slim-buster as d2l-enhancements
+
+ADD d2l-enhancements/ /tmp/d2l-enhancements/
+
+RUN \
+	cd /tmp/d2l-enhancements && \
+	pip install setuptools wheel && \
+	python setup.py sdist bdist_wheel
+
+# -----------------------------------------------------------------------------------------
+
+FROM cimg/python:3.9.5
+
+COPY --from=elastalert /tmp/elastalert/dist/*.tar.gz /tmp/elastalert/dist/
+COPY --from=d2l-enhancements /tmp/d2l-enhancements/dist/*.tar.gz /tmp/d2l-enhancements/dist/
+
+RUN \
+	sudo apt-get -y update && \
+	sudo apt-get -y upgrade && \
+	sudo apt-get -y autoremove && \
+	sudo rm -rf /var/lib/apt/lists/* && \
+	pip install --upgrade awscli pip && \
+	pip install /tmp/elastalert/dist/*.tar.gz && \
+	pip install /tmp/d2l-enhancements/dist/*.tar.gz && \
+	sudo rm -rf /tmp/*
+
+ENV TZ "UTC"
