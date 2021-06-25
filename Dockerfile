@@ -5,6 +5,7 @@ RUN \
 	apt-get -y install unzip
 
 ADD https://github.com/jertel/elastalert2/archive/refs/tags/2.1.1.zip /tmp/elastalert.zip
+
 RUN \
 	unzip /tmp/elastalert.zip -d /tmp/ && \
 	rm /tmp/elastalert.zip && \
@@ -18,18 +19,18 @@ RUN \
 
 # -----------------------------------------------------------------------------------------
 
-FROM python:3.9.5-slim-buster
+FROM cimg/python:3.9.5
 
 COPY --from=builder /tmp/elastalert/dist/*.tar.gz /tmp/elastalert/dist/
 
 RUN \
-	apt-get -y update && \
-	apt-get -y upgrade && \
-	apt-get -y install awscli && \
-	apt-get -y autoremove && \
-	rm -rf /var/lib/apt/lists/* && \
+	sudo apt-get -y update && \
+	sudo apt-get -y upgrade && \
+	sudo apt-get -y autoremove && \
+	sudo rm -rf /var/lib/apt/lists/* && \
+	pip install --upgrade awscli pip && \
 	pip install /tmp/elastalert/dist/*.tar.gz && \
-	rm -rf /tmp/*
+	sudo rm -rf /tmp/*
 
 ENV TZ "UTC"
 
