@@ -5,7 +5,7 @@ RUN \
 	apt-get -y install unzip
 
 ADD \
-	https://github.com/JeffAshton/elastalert2/archive/refs/tags/slack_channel_override.zip \
+	https://github.com/jertel/elastalert2/archive/c4d7347c253c45bd84c219b85671989af639f3c5.zip \
 	/tmp/elastalert.zip
 
 RUN \
