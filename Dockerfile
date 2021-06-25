@@ -1,4 +1,4 @@
-FROM python:3.9.5-slim-buster as builder
+FROM python:3.9.5-slim-buster as elastalert
 
 RUN \
 	apt-get -y update && \
@@ -18,9 +18,21 @@ RUN \
 
 # -----------------------------------------------------------------------------------------
 
+FROM python:3.9.5-slim-buster as d2l-enhancements
+
+ADD d2l-enhancements/ /tmp/d2l-enhancements/
+
+RUN \
+	cd /tmp/d2l-enhancements && \
+	pip install setuptools wheel && \
+	python setup.py sdist bdist_wheel
+
+# -----------------------------------------------------------------------------------------
+
 FROM cimg/python:3.9.5
 
-COPY --from=builder /tmp/elastalert/dist/*.tar.gz /tmp/elastalert/dist/
+COPY --from=elastalert /tmp/elastalert/dist/*.tar.gz /tmp/elastalert/dist/
+COPY --from=d2l-enhancements /tmp/d2l-enhancements/dist/*.tar.gz /tmp/d2l-enhancements/dist/
 
 RUN \
 	sudo apt-get -y update && \
@@ -29,8 +41,7 @@ RUN \
 	sudo rm -rf /var/lib/apt/lists/* && \
 	pip install --upgrade awscli pip && \
 	pip install /tmp/elastalert/dist/*.tar.gz && \
+	pip install /tmp/d2l-enhancements/dist/*.tar.gz && \
 	sudo rm -rf /tmp/*
 
 ENV TZ "UTC"
-
-ADD d2l-enhancements/ /usr/local/lib/python3.9/site-packages/d2l/
