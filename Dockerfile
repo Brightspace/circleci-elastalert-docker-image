@@ -1,8 +1,8 @@
 FROM python:3.9.5-slim-buster as builder
 
 RUN \
-	apt-get update -y && \
-	apt-get install -y unzip
+	apt-get -y update && \
+	apt-get -y install unzip
 
 ADD https://github.com/jertel/elastalert2/archive/refs/tags/2.1.1.zip /tmp/elastalert.zip
 RUN \
@@ -21,7 +21,7 @@ FROM python:3.9.5-slim-buster
 
 COPY --from=builder /tmp/elastalert/dist/*.tar.gz /tmp/elastalert/dist/
 
-RUN apt-get update && \
+RUN apt-get -y update && \
 	apt-get -y upgrade && \
 	apt-get -y install awscli curl jq && \
 	apt-get -y autoremove && \
