@@ -5,7 +5,7 @@ RUN \
 	apt-get -y install unzip
 
 ADD \
-	https://github.com/jertel/elastalert2/archive/a5c1d0591988ec2d59cf3d1b23aab459d47e701a.zip \
+	https://github.com/Brightspace/elastalert2/archive/a36b9227a309d08963d417ca5e16ae4590724733.zip \
 	/tmp/elastalert.zip
 
 RUN \

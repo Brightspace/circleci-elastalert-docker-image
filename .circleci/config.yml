@@ -3,7 +3,7 @@ jobs:
   build:
 
     environment:
-      - DOCKER_IMAGE_NAME: littlefoot/circleci-elastalert2:2.1.1
+      - DOCKER_IMAGE_NAME: littlefoot/circleci-elastalert2:2.1.2
 
     machine:
       enabled: true
