@@ -1,11 +1,11 @@
-FROM python:3.9.5-slim-buster as elastalert
+FROM python:3.10.0-slim-buster as elastalert
 
 RUN \
 	apt-get -y update && \
 	apt-get -y install unzip
 
 ADD \
-	https://github.com/Brightspace/elastalert2/archive/a36b9227a309d08963d417ca5e16ae4590724733.zip \
+	https://github.com/Brightspace/elastalert2/archive/1c4d649428037b061a5dc25171a07dd123a9cf3f.zip \
 	/tmp/elastalert.zip
 
 RUN \
@@ -20,7 +20,7 @@ RUN \
 
 # -----------------------------------------------------------------------------------------
 
-FROM python:3.9.5-slim-buster as d2l-enhancements
+FROM python:3.10.0-slim-buster as d2l-enhancements
 
 ADD d2l-enhancements/ /tmp/d2l-enhancements/
 
@@ -31,7 +31,7 @@ RUN \
 
 # -----------------------------------------------------------------------------------------
 
-FROM cimg/python:3.9.5
+FROM cimg/python:3.10.0
 
 COPY --from=elastalert /tmp/elastalert/dist/*.tar.gz /tmp/elastalert/dist/
 COPY --from=d2l-enhancements /tmp/d2l-enhancements/dist/*.tar.gz /tmp/d2l-enhancements/dist/
@@ -39,11 +39,13 @@ COPY --from=d2l-enhancements /tmp/d2l-enhancements/dist/*.tar.gz /tmp/d2l-enhanc
 RUN \
 	sudo apt-get -y update && \
 	sudo apt-get -y upgrade && \
-	sudo apt-get -y autoremove && \
-	sudo rm -rf /var/lib/apt/lists/* && \
+	sudo apt-get -y install gcc libffi-dev && \
 	pip install --upgrade awscli pip && \
 	pip install /tmp/elastalert/dist/*.tar.gz && \
 	pip install /tmp/d2l-enhancements/dist/*.tar.gz && \
+	sudo apt-get -y remove gcc libffi-dev && \
+	sudo apt-get -y autoremove && \
+	sudo rm -rf /var/lib/apt/lists/* && \
 	sudo rm -rf /tmp/*
 
 ENV TZ "UTC"
